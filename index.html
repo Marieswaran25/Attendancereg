@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance</title>
+    <style>
+        #search{
+            height: 50px;
+            width:400px;
+        }
+        #button{
+            height: 50px;
+            width:100px;
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="margin-left: 40%;" id="att">ATTENDANCE</h1>
+    <div class="searchbar" style="display: block;margin-left: 35%;margin-top: 10%;">
+        <input type="text" name="" id="search" placeholder="Search Employee">
+        <button id="button" onclick="searching()">Search</button>
+    </div>
+    <div class="details">
+        <h3  style="margin-left: 40%;">Search for Employee Attendance Details</h3>
+        <ol id="o" style="margin-left: 40%;"></ol>
+        <p id="err" style="margin-left: 45%;color: red;font-size: larger;"></p>
+    </div>
+    <script>
+         function searching(){
+                var empname=document.getElementById("search").value;
+                var v1=new XMLHttpRequest();
+        v1.onreadystatechange=function(){
+            if(this.readyState==4 && this.status==200){
+                var v2=JSON.parse(v1.responseText);
+                var t=" ";
+                var misma=" ";
+                if(empname!=="Test1"&&empname!=="Test2"&&empname!=="Test2"&&empname!=="Test3"&&empname!=="Test4"&&empname!=="Test5"&&empname!=="Test6"){
+                    document.getElementById("err").innerHTML=" *user not found";
+                    }
+                   
+                for(var i=0;i<v2.length;i++){
+                    // t+="<li>"+v2[i].employeName+"</li>";
+                    if(v2[i].employeName==empname){
+                        t+="<li>"+v2[i].date+"</li>";
+                    }
+                  }
+                  
+                document.getElementById("o").innerHTML=t;
+              
+
+            }
+        };
+        v1.open("GET","AttendanceRegister.json",true);
+        v1.send();
+            }
+       
+    </script>
+</body>
+</html>
